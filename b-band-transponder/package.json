@@ -1,0 +1,15 @@
+{
+  "name": "exclusible-s-band-transponder",
+  "version": "0.0.1",
+  "description": "Websocket for the exchange rate for the pair BTC/USD",
+  "main": "socket.ts",
+  "scripts": {
+    "ignition": "echo 'ONE SMALL STEP FOR MAN. ONE GIANT LEAP FOR MANKIND.'"
+  },
+  "keywords": [
+    "crypto",
+    "ws"
+  ],
+  "author": "Nuno Alexandre",
+  "license": "ISC"
+}

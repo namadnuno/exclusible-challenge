@@ -1,0 +1,15 @@
+{
+  "name": "exclusible-api",
+  "version": "0.0.1",
+  "description": "Simple tech challenge, for user registering API that will be consumed by a ReactJS/NextJS frontend. This will be managed by a Admin CRUD panel.",
+  "main": "server.ts",
+  "scripts": {
+    "serve": "echo 'An awesome API will be running'"
+  },
+  "keywords": [
+    "api",
+    "express"
+  ],
+  "author": "Nuno Alexandre",
+  "license": "ISC"
+}
