@@ -4,12 +4,38 @@
   "description": "Simple tech challenge, for user registering API that will be consumed by a ReactJS/NextJS frontend. This will be managed by a Admin CRUD panel.",
   "main": "server.ts",
   "scripts": {
-    "serve": "echo 'An awesome API will be running'"
+    "serve": "echo 'An awesome API will be running'",
+    "lint": "eslint . --ext .ts",
+    "ts-check": "tsc",
+    "prepare": "cd .. && husky install api/.husky"
+  },
+  "engines": {
+    "node": "~16",
+    "npm": "~8"
   },
   "keywords": [
     "api",
     "express"
   ],
   "author": "Nuno Alexandre",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "eslint": "^8.13.0",
+    "husky": "^7.0.4",
+    "typescript": "^4.6.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run ts-check"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,tsx,ts}": [
+      "npm run lint",
+      "git add"
+    ]
+  }
 }
