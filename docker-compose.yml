@@ -17,6 +17,7 @@ services:
       context: ./api
     volumes:
       - ./api:/usr/src/app
+      - ./api/node_modules:/usr/src/app/node_modules
     environment:
       API_PORT: ${API_PORT}
     ports:
