@@ -1,5 +1,6 @@
 services:
   db:
+    container_name: db
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
@@ -8,11 +9,16 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-    ports:
-      - 3306:3306
+      MYSQL_ROOT_HOST: '%'
+    expose:
+      - '3306'
   api:
     container_name: api
     image: 16-alpine
+    depends_on:
+      - db
+    env_file:
+      - .env
     build:
       context: ./api
     volumes:
@@ -27,6 +33,8 @@ services:
   b-band-transponder:
     container_name: b-band-transponder
     image: 16-alpine
+    depends_on:
+      - db
     build:
       context: ./b-band-transponder
     volumes:
@@ -38,10 +46,8 @@ services:
     command: ["npm", "run", 'ignition']
   adminer:
     image: adminer
+    depends_on:
+      - db
     restart: always
     ports:
       - 8080:8080
-
-volumes:
-  api:
-  b-band-transponder:
