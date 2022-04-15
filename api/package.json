@@ -7,7 +7,11 @@
     "serve": "nodemon server.ts",
     "lint": "eslint . --ext .ts",
     "ts-check": "tsc",
-    "prepare": "cd .. && husky install api/.husky"
+    "prepare": "cd .. && husky install api/.husky",
+    "db:migrate": "sequelize db:migrate",
+    "model:create": "sequelize model:create",
+    "migration:create": "sequelize migration:create",
+    "db:migrate:undo": "sequelize db:migrate:undo"
   },
   "engines": {
     "node": "~16",
@@ -27,6 +31,7 @@
     "eslint": "^8.13.0",
     "husky": "^7.0.4",
     "nodemon": "^2.0.15",
+    "sequelize-cli": "^6.4.1",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
   },
@@ -43,6 +48,8 @@
     ]
   },
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.19.0"
   }
 }
