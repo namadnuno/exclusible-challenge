@@ -1,26 +1,23 @@
-import {
-    DataTypes
-} from 'sequelize';
+import { DataTypes } from "sequelize";
 
-import db from '../db';
+import db from "../db";
 
 export interface UserAttributes {
-    name ? : string;
-    email ? : string;
-    password ? : string;
-    token ? : string;
-
+  name?: string;
+  email?: string;
+  password?: string;
+  token?: string;
 }
 
 export interface UserInstance {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
 
-    name: string;
-    email: string;
-    password: string;
-    token: string;
+  name: string;
+  email: string;
+  password: string;
+  token: string;
 }
 
 export interface PublicUserInstance {
@@ -32,12 +29,12 @@ export interface PublicUserInstance {
   email: string;
 }
 
-const User = db().define('User', {
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    token: DataTypes.STRING,
-    is_admin: DataTypes.FLOAT
+const User = db().define("User", {
+  name: DataTypes.STRING,
+  email: DataTypes.STRING,
+  password: DataTypes.STRING,
+  token: DataTypes.STRING,
+  is_admin: DataTypes.FLOAT,
 });
 
 export default User;

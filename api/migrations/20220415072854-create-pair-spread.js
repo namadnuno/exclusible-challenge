@@ -1,31 +1,31 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require("sequelize");
 
 module.exports = {
   up: ({ context: queryInterface }) => {
-    return queryInterface.createTable('PairSpreads', {
+    return queryInterface.createTable("PairSpreads", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       pair: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       spread_percent: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: ({ context: queryInterface }) => {
-    return queryInterface.dropTable('PairSpreads');
-  }
+    return queryInterface.dropTable("PairSpreads");
+  },
 };

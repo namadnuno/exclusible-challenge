@@ -12,7 +12,8 @@
     "model:create": "sequelize model:create",
     "migration:create": "sequelize migration:create",
     "db:migrate:undo": "sequelize db:migrate:undo",
-    "test": "jest . --forceExit"
+    "test": "jest . --forceExit",
+    "prettier": "prettier --check --write ."
   },
   "engines": {
     "node": "~16",
@@ -34,9 +35,12 @@
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "nodemon": "^2.0.15",
+    "prettier": "2.6.2",
     "sequelize-cli": "^6.4.1",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3",
