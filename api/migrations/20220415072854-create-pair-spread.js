@@ -1,6 +1,8 @@
+const { Sequelize } = require('sequelize');
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('PairSpreads', {
+  up: ({ context: queryInterface }) => {
+    return queryInterface.createTable('PairSpreads', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -23,7 +25,7 @@ module.exports = {
       }
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('PairSpreads');
+  down: ({ context: queryInterface }) => {
+    return queryInterface.dropTable('PairSpreads');
   }
 };
