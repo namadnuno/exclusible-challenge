@@ -7,6 +7,7 @@ const Config = {
     MYSQL_DATABASE: process.env.MYSQL_DATABASE as string,
     DB_DIALECT: process.env.DB_DIALECT as Dialect,
     MYSQL_HOST: process.env.MYSQL_HOST as string,
+    NODE_ENV: process.env.NODE_ENV as string,
 }
 
 export default Config;

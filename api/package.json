@@ -12,7 +12,7 @@
     "model:create": "sequelize model:create",
     "migration:create": "sequelize migration:create",
     "db:migrate:undo": "sequelize db:migrate:undo",
-    "test": "jest . --detectOpenHandles"
+    "test": "jest . --forceExit"
   },
   "engines": {
     "node": "~16",
