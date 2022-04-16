@@ -23,6 +23,15 @@ export interface UserInstance {
     token: string;
 }
 
+export interface PublicUserInstance {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+
+  name: string;
+  email: string;
+}
+
 const User = db().define('User', {
     name: DataTypes.STRING,
     email: DataTypes.STRING,
