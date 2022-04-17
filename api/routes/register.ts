@@ -1,6 +1,5 @@
 import express from "express";
-import { hashPassword } from "../helpers/password";
-import User, { PublicUserInstance } from "../models/user";
+import { createUser, PublicUserInstance } from "../models/user";
 import { body, validationResult } from "express-validator";
 
 const app = express();
@@ -20,11 +19,7 @@ app.post(
       return res.status(422).json({ errors: errors.array() });
     }
 
-    const user = await User.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: hashPassword(req.body.password),
-    });
+    const user = await createUser(req.body);
 
     res.status(201);
     res.send({
