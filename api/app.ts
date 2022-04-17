@@ -1,5 +1,6 @@
 import express, { json } from "express";
 import register from "./routes/register";
+import login from "./routes/login";
 
 const app = express();
 
@@ -11,6 +12,7 @@ const routes = () => {
   });
 
   app.use(register);
+  app.use(login);
 
   return app;
 };

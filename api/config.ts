@@ -8,6 +8,7 @@ const Config = {
   DB_DIALECT: process.env.DB_DIALECT as Dialect,
   MYSQL_HOST: process.env.MYSQL_HOST as string,
   NODE_ENV: process.env.NODE_ENV as string,
+  API_KEY: process.env.API_KEY as string,
 };
 
 export default Config;

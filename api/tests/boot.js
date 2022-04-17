@@ -5,3 +5,4 @@ process.env.MYSQL_DATABASE = "./db.sqlite";
 process.env.DB_DIALECT = "sqlite";
 process.env.MYSQL_HOST = undefined;
 process.env.NODE_ENV = "test";
+process.env.API_KEY = "random_key";

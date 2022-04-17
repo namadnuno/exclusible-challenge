@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 
 import db from "../db";
+import { hashPassword } from "../helpers/password";
 
 export interface UserAttributes {
   name?: string;
@@ -36,5 +37,13 @@ const User = db().define("User", {
   token: DataTypes.STRING,
   is_admin: DataTypes.FLOAT,
 });
+
+export const createUser = async (payload: UserAttributes) => {
+  return await User.create({
+    name: payload.name,
+    email: payload.email,
+    password: hashPassword(payload.password as string),
+  });
+}
 
 export default User;
