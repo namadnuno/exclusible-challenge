@@ -6,7 +6,6 @@ import { RegisterResponse } from "../routes/register";
 import api from "./helpers/api";
 import mockDb from "./helpers/mockDb";
 import jwt from "jsonwebtoken";
-import { Model } from "sequelize/types";
 import { createToken } from "../helpers/jwt";
 
 require("./helpers/runApp");
@@ -40,13 +39,13 @@ describe("authentication flow", () => {
         const dbUsers = await User.findAll();
         expect(dbUsers.length).toBe(1);
 
-        expect(dbUsers[0].get("name")).toBe(registerPayload.name);
-        expect(dbUsers[0].get("email")).toBe(registerPayload.email);
+        expect(dbUsers[0].name).toBe(registerPayload.name);
+        expect(dbUsers[0].email).toBe(registerPayload.email);
       });
 
       it("should hash user password", async () => {
         const dbUsers = await User.findAll();
-        const savedPassword = dbUsers[0].get("password");
+        const savedPassword = dbUsers[0].password;
         expect(savedPassword).not.toBe(registerPayload.password);
         expect(
           isValidPassword(registerPayload.password, savedPassword as string)
@@ -112,7 +111,7 @@ describe("authentication flow", () => {
         password: "password",
       };
 
-      let user: Model<UserInstance, any>;
+      let user: UserInstance;
 
       beforeEach(async () => {
         user = await createUser(userData);
@@ -137,8 +136,8 @@ describe("authentication flow", () => {
           email: string;
         };
 
-        expect(verifiedToken.user_id).toBe(user.get("id"));
-        expect(verifiedToken.email).toBe(user.get("email"));
+        expect(verifiedToken.user_id).toBe(user.id);
+        expect(verifiedToken.email).toBe(user.email);
       });
     });
 
@@ -215,8 +214,8 @@ describe("authentication flow", () => {
       beforeEach(async () => {
         const user = await createUser(userData);
         token = createToken({
-          id: user.get("id") as number,
-          email: user.get("email") as string,
+          id: user.id,
+          email: user.email,
         });
       });
 
@@ -234,7 +233,7 @@ describe("authentication flow", () => {
         });
 
         if (user) {
-          expect(user.get("token")).toBe(null);
+          expect(user.token).toBe(null);
         }
       });
     });

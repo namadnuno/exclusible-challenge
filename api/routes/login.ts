@@ -33,10 +33,7 @@ app.post(
       },
     });
 
-    if (
-      user === null ||
-      !isValidPassword(req.body.password, user.get("password") as string)
-    ) {
+    if (user === null || !isValidPassword(req.body.password, user.password)) {
       res.status(403);
       return res.send({
         message: "Invalid credentials",
@@ -45,8 +42,8 @@ app.post(
 
     if (user) {
       const token = createToken({
-        id: user.get("id") as number,
-        email: user.get("email") as string,
+        id: user.id,
+        email: user.email,
       });
 
       res.status(200);

@@ -1,4 +1,4 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 
 import db from "../db";
 import { hashPassword } from "../helpers/password";
@@ -8,9 +8,10 @@ export interface UserAttributes {
   email?: string;
   password?: string;
   token?: string;
+  is_admin?: boolean;
 }
 
-export interface UserInstance {
+export interface UserInstance extends Model {
   id: number;
   createdAt: Date;
   updatedAt: Date;
@@ -19,6 +20,7 @@ export interface UserInstance {
   email: string;
   password: string;
   token: string;
+  is_admin: boolean;
 }
 
 export interface PublicUserInstance {
@@ -30,7 +32,7 @@ export interface PublicUserInstance {
   email: string;
 }
 
-const User = db().define("User", {
+const User = db().define<UserInstance, UserAttributes>("User", {
   name: DataTypes.STRING,
   email: DataTypes.STRING,
   password: DataTypes.STRING,
@@ -38,11 +40,12 @@ const User = db().define("User", {
   is_admin: DataTypes.FLOAT,
 });
 
-export const createUser = async (payload: UserAttributes) => {
+export const createUser = async (payload: UserAttributes, isAdmin = false) => {
   return await User.create({
     name: payload.name,
     email: payload.email,
     password: hashPassword(payload.password as string),
+    is_admin: isAdmin,
   });
 };
 
