@@ -2,8 +2,7 @@ import express from "express";
 import User, { PublicUserInstance } from "../models/user";
 import { body, validationResult } from "express-validator";
 import { isValidPassword } from "../helpers/password";
-import jwt from "jsonwebtoken";
-import Config from "../config";
+import { createToken } from "../helpers/jwt";
 
 const app = express();
 
@@ -11,6 +10,11 @@ export interface LoginResponse {
   token: string;
   expiresIn: number;
   user: PublicUserInstance;
+}
+
+export interface JWTUser {
+  user_id: number;
+  email: string;
 }
 
 app.post(
@@ -40,17 +44,10 @@ app.post(
     }
 
     if (user) {
-      console.log({ api: Config.API_KEY }, Config);
-      const token = jwt.sign(
-        {
-          user_id: user.get("id"),
-          email: user.get("email"),
-        },
-        Config.API_KEY,
-        {
-          expiresIn: "2h",
-        }
-      );
+      const token = createToken({
+        id: user.get("id") as number,
+        email: user.get("email") as string,
+      });
 
       res.status(200);
       res.send({ token, expiresIn: "2h", user });
