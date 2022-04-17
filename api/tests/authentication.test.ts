@@ -7,6 +7,7 @@ import api from "./helpers/api";
 import mockDb from "./helpers/mockDb";
 import jwt from "jsonwebtoken";
 import { Model } from "sequelize/types";
+import { createToken } from "../helpers/jwt";
 
 require("./helpers/runApp");
 
@@ -196,6 +197,73 @@ describe("authentication flow", () => {
         } catch (e) {
           expect(e.response.status).toBe(403);
           expect(e.response.data.message).toBe("Invalid credentials");
+        }
+      });
+    });
+  });
+
+  describe("logout", () => {
+    describe("with valid token", () => {
+      const userData = {
+        name: "Nuno",
+        email: "nuno@gmail.com",
+        password: "password",
+      };
+
+      let token: string;
+
+      beforeEach(async () => {
+        const user = await createUser(userData);
+        token = createToken({
+          id: user.get("id") as number,
+          email: user.get("email") as string,
+        });
+      });
+
+      it("should remove token from user", async () => {
+        const response = await api().post<LoginResponse>(
+          "/logout",
+          {},
+          { headers: { "X-TOKEN": token } }
+        );
+
+        expect(response.status).toBe(204);
+
+        const user = await User.findOne({
+          where: { email: userData.email },
+        });
+
+        if (user) {
+          expect(user.get("token")).toBe(null);
+        }
+      });
+    });
+
+    describe("with invalid token", () => {
+      it("should return invalid token response", async () => {
+        try {
+          await api().post<LoginResponse>(
+            "/logout",
+            {},
+            { headers: { "X-TOKEN": "123" } }
+          );
+        } catch (e) {
+          expect(e.response.status).toBe(401);
+        }
+      });
+    });
+
+    describe("with invalid token with removed user data", () => {
+      it("should return invalid token response", async () => {
+        const token = createToken({ id: 3, email: "test@gmail.com" });
+        try {
+          await api().post<LoginResponse>(
+            "/logout",
+            {},
+            { headers: { "X-TOKEN": token } }
+          );
+        } catch (e) {
+          expect(e.response.status).toBe(401);
         }
       });
     });

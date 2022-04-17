@@ -44,6 +44,6 @@ export const createUser = async (payload: UserAttributes) => {
     email: payload.email,
     password: hashPassword(payload.password as string),
   });
-}
+};
 
 export default User;

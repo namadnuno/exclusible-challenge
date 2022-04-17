@@ -1,6 +1,8 @@
 import express, { json } from "express";
 import register from "./routes/register";
 import login from "./routes/login";
+import logout from "./routes/logout";
+import auth from "./middleware/auth";
 
 const app = express();
 
@@ -13,6 +15,7 @@ const routes = () => {
 
   app.use(register);
   app.use(login);
+  app.use(auth, logout);
 
   return app;
 };
