@@ -1,14 +1,9 @@
-import { AxiosError, AxiosResponse } from "axios";
 import { isValidPassword } from "../helpers/password";
 import User, { createUser, UserInstance } from "../models/user";
-import { LoginResponse } from "../routes/login";
-import { RegisterResponse } from "../routes/register";
-import api from "./helpers/api";
 import mockDb from "./helpers/mockDb";
 import jwt from "jsonwebtoken";
 import { createToken } from "../helpers/jwt";
-
-require("./helpers/runApp");
+import api from "./helpers/api";
 
 describe("authentication flow", () => {
   beforeEach(async () => {
@@ -21,19 +16,15 @@ describe("authentication flow", () => {
 
   describe("register", () => {
     describe("user register with valid data", () => {
-      let response: AxiosResponse<RegisterResponse>;
-
       const registerPayload = {
         name: "Nuno",
         email: "nuno@gmail.com",
         password: "password",
       };
 
-      beforeEach(async () => {
-        response = await api().post("/register", registerPayload);
-      });
-
       it("should create the user in DB", async () => {
+        const response = await api.post("/register").send(registerPayload);
+
         expect(response.status).toEqual(201);
 
         const dbUsers = await User.findAll();
@@ -44,6 +35,8 @@ describe("authentication flow", () => {
       });
 
       it("should hash user password", async () => {
+        await api.post("/register").send(registerPayload);
+
         const dbUsers = await User.findAll();
         const savedPassword = dbUsers[0].password;
         expect(savedPassword).not.toBe(registerPayload.password);
@@ -54,51 +47,37 @@ describe("authentication flow", () => {
     });
 
     describe("user register with invalid data", () => {
-      let errorResponse: AxiosError<{
-        errors: Array<Record<string, string>>;
-      }>;
+      it("should show validation errors", async () => {
+        const registerPayload = {
+          name: "",
+          email: "",
+          password: "",
+        };
+        const response = await api.post("/register").send(registerPayload);
 
-      const registerPayload = {
-        name: "",
-        email: "",
-        password: "",
-      };
-
-      beforeEach(async () => {
-        try {
-          await api().post("/register", registerPayload);
-        } catch (e) {
-          errorResponse = e;
-        }
-      });
-
-      it("should show validation errors", () => {
-        expect(errorResponse).not.toBeUndefined();
-        if (errorResponse && errorResponse.response) {
-          expect(errorResponse.response.status).toBe(422);
-          expect(errorResponse.response.data).toEqual({
-            errors: [
-              {
-                location: "body",
-                msg: "Invalid value",
-                param: "name",
-                value: "",
-              },
-              {
-                location: "body",
-                msg: "Invalid value",
-                param: "email",
-                value: "",
-              },
-              {
-                location: "body",
-                msg: "Invalid value",
-                param: "password",
-                value: "",
-              },
-            ],
-          });
-        }
+        expect(response.status).toBe(422);
+        expect(response.body).toEqual({
+          errors: [
+            {
+              location: "body",
+              msg: "Invalid value",
+              param: "name",
+              value: "",
+            },
+            {
+              location: "body",
+              msg: "Invalid value",
+              param: "email",
+              value: "",
+            },
+            {
+              location: "body",
+              msg: "Invalid value",
+              param: "password",
+              value: "",
+            },
+          ],
+        });
       });
     });
   });
@@ -118,18 +97,18 @@ describe("authentication flow", () => {
       });
 
       it("should return the user signed token", async () => {
-        const response = await api().post<LoginResponse>("/login", {
+        const response = await api.post("/login").send({
           email: userData.email,
           password: userData.password,
         });
 
         expect(response.status).toBe(200);
-        expect(response.data.token).toBeTruthy();
-        expect(response.data.expiresIn).toBeTruthy();
-        expect(response.data.user.name).toBe(userData.name);
+        expect(response.body.token).toBeTruthy();
+        expect(response.body.expiresIn).toBeTruthy();
+        expect(response.body.user.name).toBe(userData.name);
 
         const verifiedToken = jwt.verify(
-          response.data.token,
+          response.body.token,
           process.env.API_KEY as string
         ) as {
           user_id: number;
@@ -142,37 +121,36 @@ describe("authentication flow", () => {
     });
 
     describe("user sign in with invalid data", () => {
-      const userData = {
-        email: "",
-        password: "",
-      };
-
       it("should return an error response", async () => {
-        expect(() =>
-          api().post<LoginResponse>("/login", {
+        const userData = {
+          email: "",
+          password: "",
+        };
+
+        await api
+          .post("/login")
+          .send({
             email: userData.email,
             password: userData.password,
           })
-        ).rejects.toThrowError("Request failed with status code 422");
+          .expect(422);
       });
     });
 
     describe("sign in with non existent user", () => {
-      const userData = {
-        email: "nuno@gmail.com",
-        password: "password",
-      };
-
       it("should return Invalid credentials error response", async () => {
-        try {
-          await api().post<LoginResponse>("/login", {
-            email: userData.email,
-            password: userData.password,
-          });
-        } catch (e) {
-          expect(e.response.status).toBe(403);
-          expect(e.response.data.message).toBe("Invalid credentials");
-        }
+        const userData = {
+          email: "nuno@gmail.com",
+          password: "password",
+        };
+
+        const response = await api.post("/login").send({
+          email: userData.email,
+          password: userData.password,
+        });
+
+        expect(response.status).toBe(403);
+        expect(response.body.message).toBe("Invalid credentials");
       });
     });
 
@@ -188,15 +166,13 @@ describe("authentication flow", () => {
       });
 
       it("should return the Invalid Credentials error", async () => {
-        try {
-          await api().post<LoginResponse>("/login", {
-            email: userData.email,
-            password: "invalid",
-          });
-        } catch (e) {
-          expect(e.response.status).toBe(403);
-          expect(e.response.data.message).toBe("Invalid credentials");
-        }
+        const response = await api.post("/login").send({
+          email: userData.email,
+          password: "invalid",
+        });
+
+        expect(response.status).toBe(403);
+        expect(response.body.message).toBe("Invalid credentials");
       });
     });
   });
@@ -220,11 +196,7 @@ describe("authentication flow", () => {
       });
 
       it("should remove token from user", async () => {
-        const response = await api().post<LoginResponse>(
-          "/logout",
-          {},
-          { headers: { "X-TOKEN": token } }
-        );
+        const response = await api.post("/logout").set("X-TOKEN", token);
 
         expect(response.status).toBe(204);
 
@@ -240,30 +212,14 @@ describe("authentication flow", () => {
 
     describe("with invalid token", () => {
       it("should return invalid token response", async () => {
-        try {
-          await api().post<LoginResponse>(
-            "/logout",
-            {},
-            { headers: { "X-TOKEN": "123" } }
-          );
-        } catch (e) {
-          expect(e.response.status).toBe(401);
-        }
+        await api.post("/logout").set("X-TOKEN", "123").expect(401);
       });
     });
 
     describe("with invalid token with removed user data", () => {
       it("should return invalid token response", async () => {
         const token = createToken({ id: 3, email: "test@gmail.com" });
-        try {
-          await api().post<LoginResponse>(
-            "/logout",
-            {},
-            { headers: { "X-TOKEN": token } }
-          );
-        } catch (e) {
-          expect(e.response.status).toBe(401);
-        }
+        await api.post("/logout").set("X-TOKEN", token).expect(401);
       });
     });
   });

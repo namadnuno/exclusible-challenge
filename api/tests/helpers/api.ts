@@ -1,8 +1,6 @@
-import axios from "axios";
+import app from "../../app";
+import request from "supertest";
 
-const api = () =>
-  axios.create({
-    baseURL: "http://localhost:8001",
-  });
+const api = request(app());
 
 export default api;
