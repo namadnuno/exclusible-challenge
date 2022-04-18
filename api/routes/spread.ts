@@ -14,6 +14,21 @@ app.post(
       return res.status(422).json({ errors: errors.array() });
     }
 
+    const spreadSearch = await PairSpread.findOne({
+      where: {
+        pair: req.body.pair,
+      },
+    });
+
+    if (spreadSearch) {
+      spreadSearch.update({
+        pair: req.body.pair,
+        spread_percent: req.body.spread_percent,
+      });
+      res.status(200);
+      return res.send(spreadSearch);
+    }
+
     const spread = await PairSpread.create({
       pair: req.body.pair,
       spread_percent: req.body.spread_percent,

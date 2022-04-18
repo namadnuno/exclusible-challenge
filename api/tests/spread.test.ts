@@ -57,11 +57,15 @@ describe("spread change", () => {
         expect(spread?.spread_percent).toBe(1);
       });
     });
-    describe("with invalid data", () => {
-      it("should return a validation error", async () => {
+
+    describe("creating existing spread", () => {
+      beforeEach(async () => {
+        await PairSpread.create({ pair: "BTC/USB", spread_percent: 1 });
+      });
+      it("should update the spread entry", async () => {
         const payload = {
-          pair: "",
-          spread_percent: 101,
+          pair: "BTC/USB",
+          spread_percent: 4,
         };
 
         const response = await api
@@ -69,22 +73,50 @@ describe("spread change", () => {
           .send(payload)
           .set("X-TOKEN", token);
 
-        expect(response.status).toBe(422);
-        expect(response.body).toEqual({
-          errors: [
-            {
-              location: "body",
-              msg: "Invalid value",
-              param: "pair",
-              value: "",
-            },
-            {
-              location: "body",
-              msg: "Invalid value",
-              param: "spread_percent",
-              value: 101,
-            },
-          ],
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(
+          expect.objectContaining({ pair: "BTC/USB", spread_percent: 4 })
+        );
+
+        const spread = await PairSpread.findOne({
+          where: {
+            pair: payload.pair,
+          },
+        });
+
+        expect(spread).not.toBe(null);
+        expect(spread?.spread_percent).toBe(4);
+      });
+
+      describe("with invalid data", () => {
+        it("should return a validation error", async () => {
+          const payload = {
+            pair: "",
+            spread_percent: 101,
+          };
+
+          const response = await api
+            .post("/spread")
+            .send(payload)
+            .set("X-TOKEN", token);
+
+          expect(response.status).toBe(422);
+          expect(response.body).toEqual({
+            errors: [
+              {
+                location: "body",
+                msg: "Invalid value",
+                param: "pair",
+                value: "",
+              },
+              {
+                location: "body",
+                msg: "Invalid value",
+                param: "spread_percent",
+                value: 101,
+              },
+            ],
+          });
         });
       });
     });
