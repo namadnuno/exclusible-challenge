@@ -1,4 +1,4 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 
 import db from "../db";
 
@@ -7,7 +7,7 @@ export interface PairSpreadAttributes {
   spread_percent: number;
 }
 
-export interface PairSpreadInstance {
+export interface PairSpreadInstance extends Model {
   id: number;
   createdAt: Date;
   updatedAt: Date;
@@ -16,9 +16,12 @@ export interface PairSpreadInstance {
   spread_percent: number;
 }
 
-const PairSpread = db().define("PairSpread", {
-  pair: DataTypes.STRING,
-  spread_percent: DataTypes.FLOAT,
-});
+const PairSpread = db().define<PairSpreadInstance, PairSpreadAttributes>(
+  "PairSpread",
+  {
+    pair: DataTypes.STRING,
+    spread_percent: DataTypes.FLOAT,
+  }
+);
 
 export default PairSpread;

@@ -5,6 +5,7 @@ import logout from "./routes/logout";
 import auth from "./middleware/auth";
 import users from "./routes/users";
 import admin from "./middleware/admin";
+import spread from "./routes/spread";
 
 const app = express();
 
@@ -19,6 +20,7 @@ const routes = () => {
   app.use(login);
   app.use(auth, logout);
   app.use(auth, admin, users);
+  app.use(auth, admin, spread);
 
   return app;
 };
