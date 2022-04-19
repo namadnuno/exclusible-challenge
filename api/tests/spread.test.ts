@@ -1,5 +1,5 @@
 import { createToken } from "../helpers/jwt";
-import User, { createUser, UserInstance } from "../models/user";
+import { createUser, UserInstance } from "../models/user";
 import mockDb from "./helpers/mockDb";
 import api from "./helpers/api";
 import PairSpread from "../models/pairspread";
@@ -74,7 +74,7 @@ describe("spread change", () => {
           .set("X-TOKEN", token);
 
         expect(response.status).toBe(200);
-        expect(response.body).toEqual(
+        expect(response.body.spread).toEqual(
           expect.objectContaining({ pair: "BTC/USB", spread_percent: 4 })
         );
 
@@ -142,7 +142,7 @@ describe("spread change", () => {
       });
     });
 
-    it("should create a spread entry", async () => {
+    it("should not create the spread entry", async () => {
       const payload = {
         pair: "BTC/USB",
         spread_percent: 1,

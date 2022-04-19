@@ -26,7 +26,7 @@ app.post(
         spread_percent: req.body.spread_percent,
       });
       res.status(200);
-      return res.send(spreadSearch);
+      return res.send({ spread: spreadSearch });
     }
 
     const spread = await PairSpread.create({
@@ -35,7 +35,7 @@ app.post(
     });
 
     res.status(201);
-    res.send(spread);
+    res.send({ spread });
   }
 );
 

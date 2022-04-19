@@ -17,6 +17,7 @@ const initDocs = (app: Application) => {
   routes.loginDocs(openApi);
   routes.registerDocs(openApi);
   routes.usersDocs(openApi);
+  routes.spreadDocs(openApi);
 
   const openApiJson = openApi.generateJson();
 
