@@ -12,6 +12,7 @@
     "model:create": "sequelize model:create",
     "migration:create": "sequelize migration:create",
     "db:migrate:undo": "sequelize db:migrate:undo",
+    "db:seed:all": "sequelize db:seed:all",
     "test": "jest . --detectOpenHandles",
     "prettier": "prettier --check --write ."
   },
