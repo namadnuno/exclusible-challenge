@@ -49,4 +49,14 @@ export const createUser = async (payload: UserAttributes, isAdmin = false) => {
   });
 };
 
+export const publicUser = (user: UserInstance): PublicUserInstance => {
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
+  };
+};
+
 export default User;

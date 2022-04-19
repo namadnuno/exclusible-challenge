@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser, PublicUserInstance } from "../models/user";
+import { createUser, publicUser, PublicUserInstance } from "../models/user";
 import { body, validationResult } from "express-validator";
 
 const app = express();
@@ -23,7 +23,7 @@ app.post(
 
     res.status(201);
     res.send({
-      user,
+      user: publicUser(user),
     });
   }
 );

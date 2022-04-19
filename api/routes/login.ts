@@ -1,5 +1,5 @@
 import express from "express";
-import User, { PublicUserInstance } from "../models/user";
+import User, { publicUser, PublicUserInstance } from "../models/user";
 import { body, validationResult } from "express-validator";
 import { isValidPassword } from "../helpers/password";
 import { createToken } from "../helpers/jwt";
@@ -34,7 +34,7 @@ app.post(
     });
 
     if (user === null || !isValidPassword(req.body.password, user.password)) {
-      res.status(403);
+      res.status(401);
       return res.send({
         message: "Invalid credentials",
       });
@@ -47,7 +47,7 @@ app.post(
       });
 
       res.status(200);
-      res.send({ token, expiresIn: "2h", user });
+      res.send({ token, expiresIn: "2h", user: publicUser(user) });
     }
   }
 );

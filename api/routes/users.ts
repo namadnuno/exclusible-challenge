@@ -1,5 +1,9 @@
 import express from "express";
-import User, { createUser, PublicUserInstance } from "../models/user";
+import User, {
+  createUser,
+  publicUser,
+  PublicUserInstance,
+} from "../models/user";
 import { body, validationResult } from "express-validator";
 
 const app = express();
@@ -60,7 +64,7 @@ app.put(
     res.status(200);
 
     res.send({
-      user,
+      user: publicUser(user),
     });
   }
 );
