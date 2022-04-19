@@ -126,7 +126,9 @@ describe("users crud", () => {
           .send(payload);
 
         expect(response.status).toBe(403);
-        expect(response.text).toEqual("Can't perform this action.");
+        expect(response.body).toEqual({
+          message: "Can't perform this action.",
+        });
       });
     });
   });
@@ -164,7 +166,7 @@ describe("users crud", () => {
       const response = await api.get("/users").set("X-TOKEN", token);
 
       expect(response.status).toBe(200);
-      expect(response.body.length).toBe(2);
+      expect(response.body.users.length).toBe(2);
     });
   });
 
@@ -204,7 +206,7 @@ describe("users crud", () => {
         .set("X-TOKEN", token);
 
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(
+      expect(response.body.user).toEqual(
         expect.objectContaining({
           name: "Antonio",
           email: "ant@example.com",

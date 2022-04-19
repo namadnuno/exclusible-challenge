@@ -70,7 +70,7 @@ app.put(
 );
 
 app.get("/users", async (_req, res) => {
-  res.send(await User.findAll());
+  res.send({ users: await User.findAll() });
 });
 
 app.get("/users/:id", async (req, res) => {
@@ -88,7 +88,7 @@ app.get("/users/:id", async (req, res) => {
     return res.status(404).send("Not Found.");
   }
 
-  res.send(user);
+  res.send({ user });
 });
 
 app.delete("/users/:id", async (req, res) => {
@@ -109,7 +109,7 @@ app.delete("/users/:id", async (req, res) => {
   user.destroy();
 
   res.status(204);
-  res.send("");
+  res.send({ message: "Deleted" });
 });
 
 export default app;

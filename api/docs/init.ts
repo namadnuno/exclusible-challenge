@@ -16,6 +16,7 @@ openApi.setServers([{ url: `http://localhost:${Config.API_PORT}` }]);
 const initDocs = (app: Application) => {
   routes.loginDocs(openApi);
   routes.registerDocs(openApi);
+  routes.usersDocs(openApi);
 
   const openApiJson = openApi.generateJson();
 

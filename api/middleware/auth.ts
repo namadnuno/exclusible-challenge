@@ -20,8 +20,8 @@ const verifyToken = async (
     try {
       const decoded = jwt.verify(token as string, Config.API_KEY);
       req.user = decoded as JWTUser;
-
-      if ((await User.count({ where: { id: req.user.user_id } })) === 0) {
+      const user = await User.findOne({ where: { id: req.user.user_id } });
+      if (!user || user.token != token) {
         throw new Error("Invalid user");
       }
     } catch (err) {

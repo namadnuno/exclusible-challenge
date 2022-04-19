@@ -3,7 +3,7 @@ import { OpenApi, Types } from "ts-openapi";
 export const publicUserSchema = {
   id: Types.Number(),
   name: Types.String(),
-  email: Types.String(),
+  email: Types.Email(),
   createdAt: Types.DateTime(),
   updatedAt: Types.DateTime(),
 };

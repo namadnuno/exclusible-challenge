@@ -8,7 +8,7 @@ const verifyAdminAccess = async (
 ) => {
   if (!req.user) {
     res.status(403);
-    return res.send("Can't perform this action.");
+    return res.send({ message: "Can't perform this action." });
   }
 
   const user = await User.findOne({
@@ -17,7 +17,7 @@ const verifyAdminAccess = async (
 
   if (!user || !user.is_admin) {
     res.status(403);
-    return res.send("Can't perform this action.");
+    return res.send({ message: "Can't perform this action." });
   }
 
   return next();
