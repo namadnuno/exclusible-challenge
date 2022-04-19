@@ -24,8 +24,8 @@ const routes = () => {
   app.use(login);
   app.use(auth, logout);
   app.use(auth, me);
+  app.use("/spread", auth, spread);
   app.use(auth, admin, users);
-  app.use(auth, admin, spread);
 
   return app;
 };

@@ -1,11 +1,36 @@
 import express from "express";
 import { body, validationResult } from "express-validator";
-import PairSpread from "../models/pairspread";
+import admin from "../middleware/admin";
+import PairSpread, { PairSpreadInstance } from "../models/pairspread";
 
 const app = express();
 
+app.get("/", async (req, res) => {
+  const pair = req.query.pair ?? "*";
+
+  let spread: PairSpreadInstance | null;
+
+  spread = await PairSpread.findOne({
+    where: {
+      pair: pair,
+    },
+  });
+
+  if (!spread) {
+    spread = await PairSpread.findOne({
+      where: {
+        pair: "*",
+      },
+    });
+  }
+
+  res.status(200);
+  res.send({ spread });
+});
+
 app.post(
-  "/spread",
+  "/",
+  admin,
   body("pair").isLength({ min: 3 }),
   body("spread_percent").isFloat({ min: 0, max: 100 }),
   async (req, res) => {

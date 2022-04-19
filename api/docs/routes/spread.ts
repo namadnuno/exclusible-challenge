@@ -53,6 +53,37 @@ const docs = (openApi: OpenApi) => {
         },
         tags: ["Spread Maintenance"],
       },
+      get: {
+        description: "Get pair spread",
+        summary: "Get pair spread",
+        operationId: "spread-get-op",
+        requestSchema: {
+          query: {
+            pair: Types.String({
+              description: "Pair",
+              required: true,
+            }),
+          },
+          headers: {
+            "X-TOKEN": Types.String({
+              description: "JWT Token",
+              required: true,
+            }),
+          },
+        },
+        responses: {
+          200: openApi.declareSchema(
+            "Spread found successfully",
+            Types.Object({
+              properties: {
+                spread: spreadSchema,
+              },
+            })
+          ),
+          401: invalidTokenSchema(openApi),
+        },
+        tags: ["Spread Maintenance"],
+      },
     },
     true
   );
