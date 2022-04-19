@@ -1,12 +1,5 @@
 import { Types, OpenApi } from "ts-openapi";
-
-const publicUserSchema = {
-  id: Types.Number(),
-  name: Types.String(),
-  email: Types.String(),
-  createdAt: Types.DateTime(),
-  updatedAt: Types.DateTime(),
-};
+import { publicUserSchema } from "./shared";
 
 const docs = (openApi: OpenApi) => {
   openApi.addPath(
