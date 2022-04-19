@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 module.exports = {
-  development: {
+  dev: {
     username: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,

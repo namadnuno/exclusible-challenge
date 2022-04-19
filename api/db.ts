@@ -18,6 +18,7 @@ const db = () => {
   return new Sequelize({
     dialect: "sqlite",
     storage: "db.sqlite",
+    logging: process.env.NODE_ENV === "dev",
   });
 };
 
