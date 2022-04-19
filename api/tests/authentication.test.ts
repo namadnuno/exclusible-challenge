@@ -149,7 +149,7 @@ describe("authentication flow", () => {
           password: userData.password,
         });
 
-        expect(response.status).toBe(403);
+        expect(response.status).toBe(401);
         expect(response.body.message).toBe("Invalid credentials");
       });
     });
@@ -171,7 +171,7 @@ describe("authentication flow", () => {
           password: "invalid",
         });
 
-        expect(response.status).toBe(403);
+        expect(response.status).toBe(401);
         expect(response.body.message).toBe("Invalid credentials");
       });
     });
