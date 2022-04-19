@@ -7,6 +7,7 @@ import users from "./routes/users";
 import admin from "./middleware/admin";
 import spread from "./routes/spread";
 import initDocs from "./docs/init";
+import me from "./routes/me";
 
 const app = express();
 
@@ -22,6 +23,7 @@ const routes = () => {
   app.use(register);
   app.use(login);
   app.use(auth, logout);
+  app.use(auth, me);
   app.use(auth, admin, users);
   app.use(auth, admin, spread);
 

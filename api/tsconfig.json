@@ -21,7 +21,8 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "useUnknownInCatchVariables": false,
-    "typeRoots": ["./types"]
+    "typeRoots": ["./types"],
+    "types": ["node", "@types/jest", "express"]
   },
   "include": ["**/*.js", "**/.*.js", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

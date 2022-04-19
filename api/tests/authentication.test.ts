@@ -223,4 +223,40 @@ describe("authentication flow", () => {
       });
     });
   });
+
+  describe("me", () => {
+    describe("with right token", () => {
+      let token: string;
+      const userData = {
+        name: "Nuno",
+        email: "nuno@gmail.com",
+        password: "password",
+      };
+
+      beforeEach(async () => {
+        const user = await createUser(userData);
+        token = createToken({
+          id: user.id,
+          email: user.email,
+        });
+      });
+
+      it("should return the user info", async () => {
+        const response = await api.get("/me").set("X-TOKEN", token).expect(200);
+
+        expect(response.body.me).toEqual(
+          expect.objectContaining({
+            name: "Nuno",
+            email: "nuno@gmail.com",
+          })
+        );
+      });
+    });
+
+    describe("with wrong token", () => {
+      it("should return Forbidden", async () => {
+        await api.get("/me").set("X-TOKEN", "xyz").expect(401);
+      });
+    });
+  });
 });
