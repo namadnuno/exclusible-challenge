@@ -51,12 +51,6 @@
     "typescript": "^4.6.3",
     "umzug": "^3.1.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run ts-check"
-    }
-  },
   "lint-staged": {
     "*.{js,jsx,tsx,ts}": [
       "npm run prettier",
