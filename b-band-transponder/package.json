@@ -7,7 +7,7 @@
     "ignition": "nodemon socket.ts",
     "prepare": "cd .. && husky install b-band-transponder/.husky",
     "prettier": "prettier --check --write .",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint ."
   },
   "engines": {
     "node": "~16",
