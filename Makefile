@@ -5,5 +5,7 @@ setup:
 	./scripts/setup.sh
 up:  
 	./scripts/up.sh
+build:  
+	./scripts/build.sh
 clear:  
 	./scripts/clear.sh
