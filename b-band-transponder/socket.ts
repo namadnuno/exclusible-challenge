@@ -37,6 +37,10 @@ const socketServer = new WebSocket.WebSocketServer({
 const calculateWithSpread = (value: string, spread_percent: number) =>
   parseFloat(value) * (spread_percent * 1.01);
 
+socketServer.on("listening", () => {
+  console.log("B-Band-Transponder ready for connections");
+});
+
 krakenSocket.on("open", function open() {
   const exchangeSubscribers: Array<PairSubscription> = [];
 

@@ -4,5 +4,7 @@ import Config from "./config";
 const port = Config.API_PORT;
 
 app().listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(
+    `API is running on port ${port}! \n - You can access docs at the following url: http://localhost:${port}/api-docs`
+  );
 });

@@ -16,7 +16,7 @@ make setup
 make up
 ```
 
-After the following messages are shown on the terminal: `Example app listening on port 8000` and `B-Band-Transponder listening on 3030`. You will be able to access the following urls:
+After the following messages are shown on the terminal: `API is running on port 8000!` and `B-Band-Transponder ready for connections`. You will be able to access the following urls:
 - http://localhost:8000 - Api URL
 - http://localhost:8000/api-docs - Api documentation
 - http://localhost:3030 - Mini example frontend to interact with our socket
