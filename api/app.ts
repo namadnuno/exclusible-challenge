@@ -8,8 +8,11 @@ import admin from "./middleware/admin";
 import spread from "./routes/spread";
 import initDocs from "./docs/init";
 import me from "./routes/me";
+import cors from "cors";
 
 const app = express();
+
+app.use(cors());
 
 app.use(json());
 
