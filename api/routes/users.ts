@@ -13,7 +13,7 @@ export interface UsersCreateResponse {
 }
 
 app.post(
-  "/users",
+  "/",
   body("name").isLength({ min: 3 }),
   body("email").isEmail(),
   body("password").isLength({ min: 3 }),
@@ -33,7 +33,7 @@ app.post(
 );
 
 app.put(
-  "/users/:id",
+  "/:id",
   body("name").isLength({ min: 3 }),
   body("email").isEmail(),
   async (req, res) => {
@@ -69,11 +69,11 @@ app.put(
   }
 );
 
-app.get("/users", async (_req, res) => {
+app.get("/", async (_req, res) => {
   res.send({ users: await User.findAll() });
 });
 
-app.get("/users/:id", async (req, res) => {
+app.get("/:id", async (req, res) => {
   if (!req.params || !req.params.id) {
     return res.status(403).send("Invalid URL");
   }
@@ -91,7 +91,7 @@ app.get("/users/:id", async (req, res) => {
   res.send({ user });
 });
 
-app.delete("/users/:id", async (req, res) => {
+app.delete("/:id", async (req, res) => {
   if (!req.params || !req.params.id) {
     return res.status(403).send("Invalid URL");
   }

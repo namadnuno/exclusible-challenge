@@ -9,7 +9,7 @@ export interface RegisterResponse {
 }
 
 app.post(
-  "/register",
+  "/",
   body("name").isLength({ min: 3 }),
   body("email").isEmail(),
   body("password").isLength({ min: 3 }),

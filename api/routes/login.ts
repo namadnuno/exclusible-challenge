@@ -18,7 +18,7 @@ export interface JWTUser {
 }
 
 app.post(
-  "/login",
+  "/",
   body("email").isEmail(),
   body("password").isLength({ min: 3 }),
   async (req, res) => {

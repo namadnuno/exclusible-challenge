@@ -23,12 +23,12 @@ const routes = () => {
 
   initDocs(app);
 
-  app.use(register);
-  app.use(login);
-  app.use(auth, logout);
-  app.use(auth, me);
+  app.use("/register", register);
+  app.use("/login", login);
+  app.use("/logout", auth, logout);
+  app.use("/me", auth, me);
   app.use("/spread", auth, spread);
-  app.use(auth, admin, users);
+  app.use("/users", auth, admin, users);
 
   return app;
 };

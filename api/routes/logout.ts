@@ -8,7 +8,7 @@ export interface RegisterResponse {
   user: PublicUserInstance;
 }
 
-app.post("/logout", async (req, res) => {
+app.post("/", async (req, res) => {
   const { user_id } = req.user as JWTUser;
 
   const user = await User.findOne({ where: { id: user_id } });
