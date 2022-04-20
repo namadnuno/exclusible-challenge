@@ -17,7 +17,6 @@
     "*.{js,jsx,tsx,ts}": [
       "npm run prettier",
       "npm run lint",
-      "npm run test",
       "git add"
     ]
   },
