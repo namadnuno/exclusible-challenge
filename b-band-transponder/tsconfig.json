@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "lib": ["es2017"],
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "noImplicitReturns": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "es6",
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "useUnknownInCatchVariables": false,
+    "typeRoots": ["./types"],
+    "types": ["node", "@types/jest", "express"]
+  },
+  "include": ["**/*.js", "**/.*.js", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
