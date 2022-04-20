@@ -36,6 +36,14 @@ password: password
 Only the admin account can access to all users and change the spread. 
 The normal account can subscribe to our socket to get the exchange rate of a given pair.
 
+## Running tests
+
+The test can be run using the following command:
+
+```
+    make test
+```
+
 ## Api
 
 The *api* was built with:
@@ -66,3 +74,4 @@ Unsubscribe example:
     token: "JWT Token",
 }
 ```
+

@@ -9,3 +9,5 @@ build:
 	./scripts/build.sh
 clear:  
 	./scripts/clear.sh
+test:
+	docker-compose exec api npm run test
