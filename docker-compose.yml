@@ -43,10 +43,12 @@ services:
         condition: service_healthy
     build:
       context: ./b-band-transponder
+    env_file:
+      - .env
     volumes:
       - ./b-band-transponder:/usr/src/app
     environment:
-      API_PORT: ${SOCKET_PORT}
+      API_PORT: ${API_PORT}
     ports:
       - ${SOCKET_PORT}:${SOCKET_PORT}
       - 3030:3030

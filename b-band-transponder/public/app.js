@@ -136,6 +136,7 @@ document.getElementById("cancel").addEventListener("click", function (e) {
   };
   if (socket) {
     socket.send(JSON.stringify(payload));
+    socket.close();
   }
   document.getElementById("pair-box").classList.add("hidden");
 
